@@ -1,0 +1,76 @@
+% f_main([1,2]);clc;close all;
+% f_main([1,2,3]);clc;close all;
+% f_main([1,2,3,4]);clc;close all;
+% f_main([1,2,3,4,5]);clc;close all;
+% f_main([5,6]);clc;close all;
+%f_main([2,3,4,5]);clc;close all;
+%f_main([3,4,5]);clc;close all;
+%f_main([4,5]);clc;close all;
+% target_12 = f_main([1,2]);clc;close all;
+
+% nTarget = length(target_12);
+
+
+% T_OneParent = table('VariableNames',{'Source' 'Target' 'BDeu'});
+% T_TwoParent = table('VariableNames',{'Source1' 'Source2' 'Target' 'BDeu'});
+% T_ThreeParent = table('VariableNames',{'Source1' 'Source2' 'Source3' 'Target' 'BDeu'});
+
+for t = 1 : 1 % nTarget
+    target = target_12{t};
+    % Generate T_OneParent
+%     T_OneParent = table('VariableNames',{'Target' 'Source' 'BDeu'});
+    Target = [];
+    Source = [];
+    BDeu = [];
+    for comb = 1 : size(target.BDeu_Memory,2)
+        if isempty(target.BDeu_Memory{1,comb})
+                continue;
+        end
+        tSource = target.PoPaGList{target.BDeu_Memory{1,comb}.Indx};
+        tBDeu = target.BDeu_Memory{1,comb}.BDeu;
+        tTarget = target.name;
+        Source = [Source ; tSource];
+        Target = [Target ; tTarget];
+        BDeu = [BDeu; tBDeu]; 
+    end
+    T_OneParent = table(Target,Source,BDeu);
+    T_OneParent = sortrows(T_OneParent,'BDeu','descend'); % highest score at the top
+
+    
+    % Generate T_TwoParent
+    Target = [];
+    Source1 = [];
+    Source2 = [];
+    BDeu = [];
+    for comb = 1 : size(target.BDeu_Memory,2)
+        if isempty(target.BDeu_Memory{1,comb})
+                continue;
+        end
+%         TSource = target.PoPaGList(target.BDeu_Memory{2,comb}.Indx);
+        
+        indx = target.BDeu_Memory{2,comb}.Indx;
+        tSource1 = target.PoPaGList{indx(1)};
+        tSource2 = target.PoPaGList{indx(2)};
+        tBDeu = target.BDeu_Memory{1,comb}.BDeu;
+        tTarget = target.name;
+        Source1 = [Source1 ; tSource];
+        Source2 = [Source2 ; tSource];
+        Target = [Target ; tTarget];
+        BDeu = [BDeu; tBDeu]; 
+    end
+    T_TwoParent = table(Target,Source1,Source2,BDeu);
+    T_TwoParent = sortrows(T_TwoParent,'BDeu','descend'); % highest score at the top
+
+ 
+%     T_TwoParent = table('VariableNames',{'Target' 'Source1' 'Source2' 'BDeu'});
+
+    
+    % Generate T_ThreeParent
+    Target = [];
+    Source1 = [];
+    Source2 = [];
+    Source3 = [];
+    BDeu = [];
+%     T_TwoParent = table('VariableNames',{'Target' 'Source1' 'Source2' 'BDeu'});
+
+end

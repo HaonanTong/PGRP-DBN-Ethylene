@@ -1,4 +1,4 @@
-function [target] = f_main( tp_array )
+function [] = f_main( tp_array )
 % Example
 % tp_array = [ 1, 2, 3, 4]
 % for each nTF activated at time point 4 as target
@@ -128,13 +128,14 @@ for i = 1 : length(target) % for each potential target
     target{i}.BDeu = topologyi.BDeu;
     target{i}.Pa = PoPaGList(target{i}.indx);
     target{i}.PoPaGList = PoPaGList;
-    target{i}.BDeu_Memory = BDeu_Memory;
 end
 
 
 % Print BDeu Score
 
-
+for i = 1 : rmax
+    for j = 1 : 
+BDeu_Memery;
 
 
 % 
